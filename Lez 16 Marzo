@@ -1,0 +1,49 @@
+install.packages("raster")
+library(raster)
+
+# Settaggio cartella di lavoro
+#setwd("~/lab/") # Linux
+setwd("/Users/ElenaGiorgetti/desktop/lab") #mac
+# setwd("C:/lab/") # windows
+getwd()
+# import
+l2011 <- brick("p224r63_2011_masked.grd")
+l2011
+
+plot(l2011)
+#exercised: change the color gamut for all images
+cl <- colorRampPalette(c("brown1", "chocolate4", "cyan4", "darkgray")) (100) #100 sono le sfumature
+plot(l2011, col=cl)
+
+dev.off() #serve per chiudere la finestra su cui sono. per quando ho problemi con i grafici
+#exercise: plot the NIR band
+#b1=blue b2=green b3= red b4=NIR
+plot(l2011$B4_sre, col=cl)
+#oppure
+#plot(l2011[[4]], col=cl)
+
+#export graph in R
+pdf("myfirstgrapf.pdf")
+plot(l2011$B4_sre, col=cl)
+dev.off()
+
+#exercise: plotting several band in a multiframe
+par(mfrow=c(2,1))
+plot(l2011$B3_sre, col=cl)
+plot(l2011$B4_sre, col=cl)
+
+#exercise: plotting the first 4 layer
+par(mfrow=c(2,2))
+
+#plot blue
+clb <- colorRampPalette(c("cyan", "blue2", "blue4")) (100) #100 sono le sfumature
+plot(l2011$B1_sre, col=clb)
+#plot green
+clg <- colorRampPalette(c("chartreuse4", "chartreuse2", "chartreuse")) (100) #100 sono le sfumature
+plot(l2011$B2_sre, col=clg)
+#plot red
+clr <- colorRampPalette(c("brown", "brown3", "brown4")) (100) #100 sono le sfumature
+plot(l2011$B3_sre, col=clr)
+#plot NIR
+cln <- colorRampPalette(c("azure", "azure4", "black")) (100) #100 sono le sfumature
+plot(l2011$B4_sre, col=cln)
